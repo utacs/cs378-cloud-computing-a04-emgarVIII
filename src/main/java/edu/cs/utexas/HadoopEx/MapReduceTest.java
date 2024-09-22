@@ -81,7 +81,7 @@ public class MapReduceTest {
 
 		Job job = new Job(conf, "wordcount");
 
-		job.setJarByClass(WordCount.class);
+		job.setJarByClass(HourlyErrors.class);
 
 		job.setMapOutputKeyClass(LongWritable.class);
 		job.setMapOutputValueClass(TupleWritable.class);
