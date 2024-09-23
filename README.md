@@ -2,13 +2,21 @@
 
 ## Team members' names 
 
-1. Student Name:
+1. Student Name: Mauricio Garcia
 
-   Student UT EID:
+   Student UT EID: mg64983
 
-2. Student Name:
+2. Student Name: Derek Chen
 
-   Student UT EID:
+   Student UT EID: dyc377
+
+3. Student Name: Mohamed Ilaiwi
+
+   Student UT EID: mi5365
+
+4. Ritu Karivaradasamy
+
+   Student UT EID: rk27822
 
  ...
 
@@ -44,7 +52,15 @@ Specify your own Output directory like
 
 # Running:
 
+To run task1, run:
 
+`make run`
+
+To run task2: run,
+
+`make run-task2'
+
+This assumes that taxi-data-sorted-small.csv exists in the same directoy as `Makefile`.
 
 
 ## Create a JAR Using Maven 

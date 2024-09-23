@@ -24,8 +24,17 @@ public class HourlyErrors extends Configured implements Tool {
 	 */
 
 	public static void main(String[] args) throws Exception {
-		// int res = ToolRunner.run(new Configuration(), new HourlyErrors(), args);
-		int res = ToolRunner.run(new Configuration(), new ErrorRates(), args);
+		// Task 1: file output
+		// Task 2 file intermediate output
+		int res = -1;
+		System.out.println("Num arguments: " + args.length);
+		if (args.length == 2) {
+			res = ToolRunner.run(new Configuration(), new HourlyErrors(), args);
+		} else if (args.length == 3) {
+			res = ToolRunner.run(new Configuration(), new ErrorRates(), args);
+		}
+
+
 		System.exit(res);
 	}
 
