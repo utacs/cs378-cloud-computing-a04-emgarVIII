@@ -20,9 +20,13 @@ public class HourlyErrorsMapper extends Mapper<Object, Text, IntWritable, IntWri
 		
 		if (lineIsValid(value.toString())) {
 			String[] tokens = value.toString().split(",");
-			pickup_hour.set(Integer.parseInt(tokens[2]));
-			dropoff_hour.set(Integer.parseInt(tokens[3]));
-			
+			// Extract the pickup and dropoff hours
+
+			// pickup_hour.set(Integer.parseInt(tokens[2]));
+			// dropoff_hour.set(Integer.parseInt(tokens[3]));
+			pickup_hour.set(extractHoursFromDate(tokens[2]));
+			dropoff_hour.set(extractHoursFromDate(tokens[3]));
+
 			num_errors.set(numErrorsInLine(tokens));
 			context.write(pickup_hour, num_errors);
 			if (pickup_hour.get() != dropoff_hour.get()) {
@@ -64,5 +68,16 @@ public class HourlyErrorsMapper extends Mapper<Object, Text, IntWritable, IntWri
 		}
 
 		return num_errors;
+	}
+
+	/**
+	 * @param dateTime: Index 2/3 of previous csv line
+     *    	represented as "2013-01-01 00:00:00"
+	 * 
+	 */
+	private int extractHoursFromDate(String dateTime) {
+		String[] tokens = dateTime.split(" ");
+		String hours = tokens[1].split(":")[0];
+		return Integer.parseInt(hours);
 	}
 }

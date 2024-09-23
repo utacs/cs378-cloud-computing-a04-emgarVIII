@@ -36,9 +36,9 @@ Prerequisite:
 
 The java main class is:
 
-edu.cs.utexas.HadoopEx.WordCount 
+edu.cs.utexas.HadoopEx.HourlyErrors 
 
-Input file:  Book-Tiny.txt  
+Input file:  taxi-data-sorted-small.csv
 
 Specify your own Output directory like 
 
