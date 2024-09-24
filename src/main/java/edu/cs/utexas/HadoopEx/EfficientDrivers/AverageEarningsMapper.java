@@ -17,31 +17,28 @@ public class AverageEarningsMapper extends Mapper<Object, Text, Text,  FloatArra
 	public void map(Object key, Text value, Context context) 
 			throws IOException, InterruptedException {
 
-		if (Utils.lineIsValid(value.toString())) {
-			try {
-				// split  CSV line into tokens
-				String[] tokens = value.toString().split(",");
+		if (value != null && !value.toString().trim().isEmpty()) {
+			String[] tokens = value.toString().split(",");
 
-				// set driverID to 2nd col
-				driverID.set(tokens[1]);
+			// extra safety check
+			if (tokens.length > 16 && Utils.lineIsValid(value.toString())) {
+				try {
+					driverID.set(tokens[1]);
+					total_earnings.set(Float.parseFloat(tokens[16]));
+					trip_duration.set(Float.parseFloat(tokens[4]));
 
-				total_earnings.set(Float.parseFloat(tokens[16])); // column 16
-				trip_duration.set(Float.parseFloat(tokens[4]));   // column 4 (secs)
+					FloatWritable[] writables = new FloatWritable[2];
+					writables[0] = total_earnings;
+					writables[1] = trip_duration;
 
-				FloatWritable[] writables = new FloatWritable[] {
-						new FloatWritable(total_earnings.get()),
-						new FloatWritable(trip_duration.get())
-				};
+					FloatArrayWritable arrayWritable = new FloatArrayWritable();
+					arrayWritable.set(writables);
 
-				FloatArrayWritable arrayWritable = new FloatArrayWritable();
-				arrayWritable.set(writables);
-
-				// add driverID and FloatArrayWritable to the context
-				context.write(driverID, arrayWritable);
-
-			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-				// just in case
-				System.err.println("ERROr processing line: " + value.toString() + " // Type of error: " + e.toString());
+					// outpt key-value pair (driverID, [total_earnings, trip_duration])
+					context.write(driverID, arrayWritable);
+				} catch(Exception e){
+					System.out.println("EXCEPTION IN AverageEarningsMapper.java "+ e);
+				}
 			}
 		}
 	}
