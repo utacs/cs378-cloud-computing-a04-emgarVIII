@@ -1,9 +1,7 @@
 package edu.cs.utexas.HadoopEx.EfficientDrivers;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
 
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -18,24 +16,33 @@ public class AverageEarningsMapper extends Mapper<Object, Text, Text,  FloatArra
 			
 	public void map(Object key, Text value, Context context) 
 			throws IOException, InterruptedException {
-			
-            String[] tokens = null;
-			if (Utils.lineIsValid(value.toString()))
-				tokens = value.toString().split(",");
+
+		if (Utils.lineIsValid(value.toString())) {
+			try {
+				// split  CSV line into tokens
+				String[] tokens = value.toString().split(",");
+
+				// set driverID to 2nd col
 				driverID.set(tokens[1]);
-				total_earnings.set(Float.parseFloat(tokens[16]));
-				trip_duration.set(Float.parseFloat(tokens[4])); // Trip time in secs
-				
-				// make array of FloatWritable
-				FloatWritable[] writables = new FloatWritable[2];
-				writables[0] = new FloatWritable(total_earnings.get());
-				writables[1] = new FloatWritable(trip_duration.get());
-				
-				// make instance of custom FloatArrayWritable class and set it with the array we made above
+
+				total_earnings.set(Float.parseFloat(tokens[16])); // column 16
+				trip_duration.set(Float.parseFloat(tokens[4]));   // column 4 (secs)
+
+				FloatWritable[] writables = new FloatWritable[] {
+						new FloatWritable(total_earnings.get()),
+						new FloatWritable(trip_duration.get())
+				};
+
 				FloatArrayWritable arrayWritable = new FloatArrayWritable();
 				arrayWritable.set(writables);
-				
-				
-				context.write(driverID, arrayWritable); // Look into how to correctly initialize ArrayWritable
+
+				// add driverID and FloatArrayWritable to the context
+				context.write(driverID, arrayWritable);
+
+			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+				// just in case
+				System.err.println("ERROr processing line: " + value.toString() + " // Type of error: " + e.toString());
+			}
+		}
 	}
 } 
