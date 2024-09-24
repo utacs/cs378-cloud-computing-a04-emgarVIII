@@ -1,4 +1,4 @@
-package edu.cs.utexas.HadoopEx;
+package edu.cs.utexas.HadoopEx.HourlyGPS;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -7,7 +7,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import edu.cs.utexas.HadoopEx.Utils;
+import edu.cs.utexas.HadoopEx.utils.Utils;
 
 public class HourlyErrorsMapper extends Mapper<Object, Text, IntWritable, IntWritable> {
 

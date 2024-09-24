@@ -1,4 +1,4 @@
-package edu.cs.utexas.HadoopEx;
+package edu.cs.utexas.HadoopEx.HourlyGPS;
 
 import java.io.IOException;
 

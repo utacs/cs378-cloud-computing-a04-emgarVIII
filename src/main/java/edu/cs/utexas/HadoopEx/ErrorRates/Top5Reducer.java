@@ -1,4 +1,4 @@
-package edu.cs.utexas.HadoopEx;
+package edu.cs.utexas.HadoopEx.ErrorRates;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.FloatWritable;
@@ -14,13 +14,15 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Iterator;
 
+import edu.cs.utexas.HadoopEx.utils.DataItem;
+
 
 /**
  * Extracts top 5 taxiID's based on their error rates.
  */
 public class Top5Reducer extends  Reducer<Text, FloatWritable, Text, FloatWritable> {
 
-    private PriorityQueue<TaxiAndError> pq = new PriorityQueue<TaxiAndError>(5);
+    private PriorityQueue<DataItem> pq = new PriorityQueue<DataItem>(5);
     private Logger logger = Logger.getLogger(Top5Reducer.class);
 
     /**
@@ -35,7 +37,7 @@ public class Top5Reducer extends  Reducer<Text, FloatWritable, Text, FloatWritab
            throws IOException, InterruptedException {
 
        for (FloatWritable error_rate : values) {
-           pq.add(new TaxiAndError(new Text(key), new FloatWritable(error_rate.get())));
+           pq.add(new DataItem(new Text(key), new FloatWritable(error_rate.get())));
        }
 
        // keep the priorityQueue size <= heapSize
@@ -46,7 +48,7 @@ public class Top5Reducer extends  Reducer<Text, FloatWritable, Text, FloatWritab
 
 
     public void cleanup(Context context) throws IOException, InterruptedException {
-        List<TaxiAndError> values = new ArrayList<TaxiAndError>(5);
+        List<DataItem> values = new ArrayList<DataItem>(5);
 
         while (pq.size() > 0) {
             values.add(pq.poll());
@@ -55,8 +57,8 @@ public class Top5Reducer extends  Reducer<Text, FloatWritable, Text, FloatWritab
         // reverse so they are ordered in descending order
         Collections.reverse(values);
 
-        for (TaxiAndError value : values) {
-            context.write(value.getTaxiID(), value.getErrorRate());
+        for (DataItem value : values) {
+            context.write(value.getID(), value.getValue());
         }
     }
 

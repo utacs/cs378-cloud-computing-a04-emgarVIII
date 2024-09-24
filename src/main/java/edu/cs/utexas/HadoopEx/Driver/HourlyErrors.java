@@ -1,4 +1,4 @@
-package edu.cs.utexas.HadoopEx;
+package edu.cs.utexas.HadoopEx.Driver;
 
 import java.io.IOException;
 
@@ -14,6 +14,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+
+/* Files import */
+import edu.cs.utexas.HadoopEx.HourlyGPS.*;
 
 public class HourlyErrors extends Configured implements Tool {
 
@@ -31,7 +34,9 @@ public class HourlyErrors extends Configured implements Tool {
 		if (args.length == 2) {
 			res = ToolRunner.run(new Configuration(), new HourlyErrors(), args);
 		} else if (args.length == 3) {
-			res = ToolRunner.run(new Configuration(), new ErrorRates(), args);
+			res = ToolRunner.run(new Configuration(), new ErrorRatesRunner(), args);
+		} else if (args.length == 4) {
+			res = ToolRunner.run(new Configuration(), new EfficiencyRunner(), args);
 		}
 
 

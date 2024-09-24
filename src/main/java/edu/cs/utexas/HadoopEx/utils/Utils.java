@@ -1,4 +1,4 @@
-package edu.cs.utexas.HadoopEx;
+package edu.cs.utexas.HadoopEx.utils;
 
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
