@@ -2,6 +2,7 @@ package edu.cs.utexas.HadoopEx.Driver;
 
 import java.io.IOException;
 
+import edu.cs.utexas.HadoopEx.utils.FloatArrayWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -43,7 +44,8 @@ public class EfficiencyRunner extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			System.out.println("Creating job error rates");
-			Job job = new Job(conf, "EfficiencyRunner");
+			//Job job = new Job(conf, "EfficiencyRunner");
+			Job job = Job.getInstance(conf, "EfficiencyRunner");
 			job.setJarByClass(EfficiencyRunner.class);
 
             // Pre-top5 Mapper/Reducers
@@ -51,13 +53,13 @@ public class EfficiencyRunner extends Configured implements Tool {
 			job.setMapperClass(AverageEarningsMapper.class);
 
 			job.setMapOutputKeyClass(Text.class);
-			job.setMapOutputValueClass(IntWritable.class);
+			job.setMapOutputValueClass(FloatArrayWritable.class);
 			// specify a Reducer
 			job.setReducerClass(AverageEarningsReducer.class);
 
 			// specify output types
 			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(FloatWritable.class);
+			job.setOutputValueClass(FloatArrayWritable.class);
 
 			// specify input and output directories
 			FileInputFormat.addInputPath(job, new Path(args[0])); // taxi-data-small.csv
@@ -70,7 +72,8 @@ public class EfficiencyRunner extends Configured implements Tool {
 				return 1;
 			}
             
-			Job job2 = new Job(conf, "TopK");
+			Job job2 = Job.getInstance(conf, "TopK");
+
 			job2.setJarByClass(EfficiencyRunner.class);
 
 			// specify a Mapper
