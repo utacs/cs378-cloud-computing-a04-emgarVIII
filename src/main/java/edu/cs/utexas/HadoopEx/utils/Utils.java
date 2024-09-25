@@ -37,8 +37,7 @@ public class Utils {
 
             // 3. Check if the total amount of each line is correct total sum of other amounts. For example, the provided
             totalAmtValid = Math.abs((total_amt - sum)) <= epsilon;
-            // 4. Remove all Taxi rides (data lines) that have a total amount bigger than 500 USD
-            lessThan500 = total_amt < 500;
+
 			durationValid = tripDuration > 0;
         } catch (Exception e) {
             // System.out.println("Exception happened: " + e);
