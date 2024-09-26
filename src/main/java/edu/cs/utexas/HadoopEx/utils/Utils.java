@@ -19,7 +19,7 @@ public class Utils {
         // 1. Check if each line has correct number of commas and is the format of each line is correct
         String[] tokens = line.split(",");
 		boolean tokenCount = tokens.length == 17; 
-		boolean fareFloatConvertible = false, totalAmtValid = false, lessThan500 = false, durationValid = false;
+		boolean fareFloatConvertible = false, totalAmtValid = false, durationValid = false;
 
 		try {
             // 2. Check if all money values (indicies 11-16) can be converted to a float number (like total amount).
@@ -39,12 +39,11 @@ public class Utils {
             totalAmtValid = Math.abs((total_amt - sum)) <= epsilon;
 
 			durationValid = tripDuration > 0;
-			lessThan500 = total_amt <= 500;
         } catch (Exception e) {
             // System.out.println("Exception happened: " + e);
             fareFloatConvertible = false;
         }
-		return tokenCount && fareFloatConvertible && totalAmtValid && lessThan500 && durationValid;
+		return tokenCount && fareFloatConvertible && totalAmtValid && durationValid;
     }
 
 	public static int numErrorsInLine(String[] tokens) {
