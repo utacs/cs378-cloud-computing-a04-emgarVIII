@@ -36,10 +36,10 @@ public class AverageEarningsMapper extends Mapper<Object, Text, Text,  FloatArra
 
 					// outpt key-value pair (driverID, [total_earnings, trip_duration])
 					context.write(driverID, arrayWritable);
-				} catch(Exception e){
+				} catch(Exception e) {
 					System.out.println("EXCEPTION IN AverageEarningsMapper.java "+ e);
 				}
 			}
 		}
 	}
-} 
+}

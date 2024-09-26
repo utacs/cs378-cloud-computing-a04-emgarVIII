@@ -23,7 +23,7 @@ import edu.cs.utexas.HadoopEx.utils.DataItem;
 public class Top5Reducer extends  Reducer<Text, FloatWritable, Text, FloatWritable> {
 
     private PriorityQueue<DataItem> pq = new PriorityQueue<DataItem>(5);
-    private Logger logger = Logger.getLogger(Top5Reducer.class);
+    // private Logger logger = Logger.getLogger(Top5Reducer.class);
 
     /**
      * Takes in the top 5 from each mapper and calculates the overall top 5

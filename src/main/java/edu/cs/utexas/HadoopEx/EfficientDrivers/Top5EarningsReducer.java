@@ -23,7 +23,7 @@ import edu.cs.utexas.HadoopEx.utils.DataItem;
 public class Top5EarningsReducer extends  Reducer<Text, FloatWritable, Text, FloatWritable> {
 
     private PriorityQueue<DataItem> pq = new PriorityQueue<DataItem>(5);
-    private Logger logger = Logger.getLogger(Top5EarningsReducer.class);
+    // private Logger logger = Logger.getLogger(Top5EarningsReducer.class);
 
     /**
      * Takes in the top 5 from each mapper and calculates the overall top 5
@@ -41,14 +41,14 @@ public class Top5EarningsReducer extends  Reducer<Text, FloatWritable, Text, Flo
        }
 
        // keep the priorityQueue size <= heapSize
-       while (pq.size() > 5) {
+       while (pq.size() > 10) {
            pq.poll();
        }
    }
 
 
     public void cleanup(Context context) throws IOException, InterruptedException {
-        List<DataItem> values = new ArrayList<DataItem>(5);
+        List<DataItem> values = new ArrayList<DataItem>(10);
 
         while (pq.size() > 0) {
             values.add(pq.poll());

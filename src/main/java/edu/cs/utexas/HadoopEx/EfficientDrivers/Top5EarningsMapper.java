@@ -2,6 +2,7 @@ package edu.cs.utexas.HadoopEx.EfficientDrivers;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
+import org.apache.log4j.Logger;
 
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
@@ -17,6 +18,7 @@ import java.util.PriorityQueue;
  */
 public class Top5EarningsMapper extends Mapper<Text, Text, Text, FloatWritable> {
     private PriorityQueue<DataItem> pq;
+    // private Logger logger = Logger.getLogger(Top5EarningsMapper.class);
 
     public void setup(Context context) {
         pq = new PriorityQueue<>();
@@ -30,8 +32,9 @@ public class Top5EarningsMapper extends Mapper<Text, Text, Text, FloatWritable> 
 		float money_per_min = Float.parseFloat(value.toString());
 
 		pq.add(new DataItem(new Text(key), new FloatWritable(money_per_min)));
+		// logger.info("Adding to pq");
 
-		if (pq.size() > 5) {
+		if (pq.size() > 10) {
 			pq.poll();
 		}
 	}

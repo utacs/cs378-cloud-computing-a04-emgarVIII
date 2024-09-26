@@ -39,6 +39,7 @@ public class Utils {
             totalAmtValid = Math.abs((total_amt - sum)) <= epsilon;
 
 			durationValid = tripDuration > 0;
+			lessThan500 = total_amt <= 500;
         } catch (Exception e) {
             // System.out.println("Exception happened: " + e);
             fareFloatConvertible = false;
