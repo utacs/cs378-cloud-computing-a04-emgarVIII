@@ -34,7 +34,7 @@
 ![image](https://github.com/user-attachments/assets/83aaa07b-0209-48f9-b2e2-0b476f9d0d2b)
 
 ## Findings on Large Dataset:
-TASK 1:
+`TASK 1:
 0   471533
 1   354126
 2   266408
@@ -58,7 +58,7 @@ TASK 1:
 20  706806
 21  690853
 22  663087
-23  587597
+23  587597`
 
 TASK 2:
 disemailisforschoolonly@cluster-a4v2-m:~$ gsutil cat gs://my-hadoop-bucket-mauricio/output-task2/part-r-00000
