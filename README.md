@@ -18,8 +18,6 @@
 
    Student UT EID: rk27822
 
- ...
-
 ##  Course Name: CS378 - Cloud Computing 
 
 ##  Unique Number: 51515
@@ -27,6 +25,13 @@
 
 
 # Add your Project REPORT HERE 
+Screenshots of our Google Cloud - Dataproc that shows the machines ran
+![image](https://github.com/user-attachments/assets/3eb0aa0c-30af-4ee5-b05e-7064344cf46f)
+<img width="1800" alt="image" src="https://github.com/user-attachments/assets/9b6d6179-4904-4bc6-b8c4-6cbfb4372c3e">
+
+
+For each task, for each Hadoop job you ran, include a screen shot of the Yarn History.
+![image](https://github.com/user-attachments/assets/83aaa07b-0209-48f9-b2e2-0b476f9d0d2b)
 
 
 # Project Template
@@ -50,7 +55,7 @@ Input file:  taxi-data-sorted-small.csv
 
 Specify your own Output directory like 
 
-# Running:
+# Running locally using the makefile:
 
 To run task1, run:
 
@@ -58,7 +63,11 @@ To run task1, run:
 
 To run task2: run,
 
-`make run-task2'
+`make run-task2`
+
+To run task3, run,
+
+`make run-task3`
 
 This assumes that taxi-data-sorted-small.csv exists in the same directoy as `Makefile`.
 
@@ -83,10 +92,38 @@ Or has hadoop application
 ```hadoop jar your-hadoop-application.jar edu.cs.utexas.HadoopEx.WordCount arg0 arg1 ... ```
 
 
+## To run on Google Cloud (replace with your own information)
+First, add the dataset to your Google bucket.
+
+### Task 1:
+`gcloud dataproc jobs submit hadoop \
+--cluster=cluster-a4v2 \
+--region=us-central1 \
+--class=edu.cs.utexas.HadoopEx.Driver.HourlyErrors \
+--jars=gs://my-hadoop-bucket-mauricio/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar \
+-- gs://my-hadoop-bucket-mauricio/taxi-data-sorted-large.csv gs://my-hadoop-bucket-mauricio/output` 
+
+### Task 2 (Error Rates Runner):
+`gcloud dataproc jobs submit hadoop \
+--cluster=cluster-a4v2 \
+--region=us-central1 \
+--class=edu.cs.utexas.HadoopEx.Driver.HourlyErrors \
+--jars=gs://my-hadoop-bucket-mauricio/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar \
+-- gs://my-hadoop-bucket-mauricio/taxi-data-sorted-large.csv gs://my-hadoop-bucket-mauricio/intermediate-task2 gs://my-hadoop-bucket-mauricio/output-task2`
+
+### Task 3 (Efficiency Runner):
+`gcloud dataproc jobs submit hadoop \
+  --cluster=cluster-a4v2 \
+  --region=us-central1 \
+  --class=edu.cs.utexas.HadoopEx.Driver.HourlyErrors \
+  --jars=gs://my-hadoop-bucket-mauricio/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar \
+  -- gs://my-hadoop-bucket-mauricio/taxi-data-sorted-large.csv \
+  gs://my-hadoop-bucket-mauricio/intermediate-task3 \
+  gs://my-hadoop-bucket-mauricio/output-task3 \
+  gs://my-hadoop-bucket-mauricio/extra-task3`
+
 
 ## Create a single JAR File from eclipse
-
-
 
 Create a single gar file with eclipse 
 
