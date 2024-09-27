@@ -93,7 +93,7 @@ Or has hadoop application
 
 
 ## To run on Google Cloud (replace with your own information)
-First, add the dataset to your Google bucket.
+First, add the dataset to your Google bucket. Then,
 
 ### Task 1:
 `gcloud dataproc jobs submit hadoop \
@@ -125,6 +125,6 @@ First, add the dataset to your Google bucket.
 
 ## Create a single JAR File from eclipse
 
-Create a single gar file with eclipse 
+Create a single jar file with eclipse 
 
 *  File export -> export  -> export as binary ->  "Extract generated libraries into generated JAR"
